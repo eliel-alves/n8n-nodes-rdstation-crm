@@ -243,7 +243,7 @@ This node uses **API Token** authentication:
 
 ## Contributing
 
-Contributions are welcome! Feel free to open an issue or pull request.
+Contributions are welcome! Feel free to open an issue or pull request on [GitHub](https://github.com/eliel-alves/n8n-nodes-rdstation-crm).
 
 ---
 

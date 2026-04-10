@@ -25,7 +25,11 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/eliel-alves/n8n-nodes-rdstation-crm.git"
+  },
+  "homepage": "https://github.com/eliel-alves/n8n-nodes-rdstation-crm#readme",
+  "bugs": {
+    "url": "https://github.com/eliel-alves/n8n-nodes-rdstation-crm/issues"
   },
   "main": "index.js",
   "scripts": {
