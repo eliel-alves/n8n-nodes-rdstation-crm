@@ -1,0 +1,56 @@
+{
+  "name": "n8n-nodes-rdstation-crm",
+  "version": "0.1.0",
+  "description": "n8n community node for RD Station CRM — API v1 token authentication, no OAuth required",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "rdstation",
+    "rd-station",
+    "crm",
+    "rd station crm",
+    "brasil",
+    "brazil",
+    "sales",
+    "deals",
+    "contacts",
+    "pipeline",
+    "automation",
+    "workflow"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Eliel Alves",
+    "email": "elielalves.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && npm run copy:icons",
+    "copy:icons": "cp nodes/RdStationCrm/rdstation.svg dist/nodes/RdStationCrm/rdstation.svg",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/RdStationCrmApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/RdStationCrm/RdStationCrm.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "n8n-workflow": "^1.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

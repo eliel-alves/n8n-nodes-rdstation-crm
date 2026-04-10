@@ -1,0 +1,34 @@
+# Source files
+credentials/
+nodes/
+*.ts
+tsconfig.json
+
+# Development files
+.eslintrc*
+.eslintignore
+.gitignore
+.prettierrc*
+
+# Editor directories and files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test files
+test/
+tests/
+*.test.ts
+*.spec.ts
+coverage/
+
+# Environment variables
+.env
+.env.*
