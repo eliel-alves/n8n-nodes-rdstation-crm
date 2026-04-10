@@ -1,4 +1,4 @@
-# n8n-nodes-rdstation-crm
+# n8n-nodes-rdstation-crm-v1-v1
 
 Community node for [n8n](https://n8n.io) that integrates **RD Station CRM** into your workflows via the **API v1** — using only an API token, sem necessidade de OAuth ou planos adicionais do RD Station Marketing.
 
@@ -12,13 +12,13 @@ Community node for [n8n](https://n8n.io) that integrates **RD Station CRM** into
 
 1. Go to **Settings → Community Nodes**
 2. Click **Install**
-3. Enter `n8n-nodes-rdstation-crm` and confirm
+3. Enter `n8n-nodes-rdstation-crm-v1` and confirm
 
 ### Via npm (self-hosted)
 
 ```bash
 cd ~/.n8n/custom
-npm install n8n-nodes-rdstation-crm
+npm install n8n-nodes-rdstation-crm-v1
 ```
 
 ---
@@ -243,7 +243,7 @@ This node uses **API Token** authentication:
 
 ## Contributing
 
-Contributions are welcome! Feel free to open an issue or pull request on [GitHub](https://github.com/eliel-alves/n8n-nodes-rdstation-crm).
+Contributions are welcome! Feel free to open an issue or pull request on [GitHub](https://github.com/eliel-alves/n8n-nodes-rdstation-crm-v1).
 
 ---
 
