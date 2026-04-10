@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const taskOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const taskOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a task',
+				description: 'Cria uma nova tarefa vinculada a uma negociação',
+				action: 'Criar uma tarefa',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a task',
+				description: 'Busca uma tarefa pelo ID',
+				action: 'Obter uma tarefa',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many tasks',
+				description: 'Lista tarefas com filtros opcionais',
+				action: 'Obter várias tarefas',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a task',
+				description: 'Atualiza campos de uma tarefa existente',
+				action: 'Atualizar uma tarefa',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const taskFields: INodeProperties[] = [
 	//         task: get / update
 	// ----------------------------------
 	{
-		displayName: 'Task ID',
+		displayName: 'ID da Tarefa',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const taskFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the task',
+		description: 'O ID da tarefa',
 	},
 
 	// ----------------------------------
-	//         task: create
+	//         task: create — Required Fields
 	// ----------------------------------
 	{
-		displayName: 'Subject',
+		displayName: 'Assunto',
 		name: 'subject',
 		type: 'string',
 		required: true,
@@ -71,10 +75,10 @@ export const taskFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The title/subject of the task',
+		description: 'Título ou assunto da tarefa',
 	},
 	{
-		displayName: 'Type',
+		displayName: 'Tipo',
 		name: 'type',
 		type: 'options',
 		required: true,
@@ -86,27 +90,27 @@ export const taskFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Call',
-				value: 'call',
-			},
-			{
-				name: 'Email',
-				value: 'email',
-			},
-			{
-				name: 'Lunch',
+				name: 'Almoço',
 				value: 'lunch',
 			},
 			{
-				name: 'Meeting',
+				name: 'E-mail',
+				value: 'email',
+			},
+			{
+				name: 'Ligação',
+				value: 'call',
+			},
+			{
+				name: 'Reunião',
 				value: 'meeting',
 			},
 			{
-				name: 'Task',
+				name: 'Tarefa',
 				value: 'task',
 			},
 			{
-				name: 'Visit',
+				name: 'Visita',
 				value: 'visit',
 			},
 			{
@@ -115,14 +119,73 @@ export const taskFields: INodeProperties[] = [
 			},
 		],
 		default: 'task',
-		description: 'The type of the task',
+		description: 'O tipo da tarefa',
+	},
+	{
+		displayName: 'ID da Negociação',
+		name: 'deal_id',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['create'],
+			},
+		},
+		default: '',
+		description: 'ID da negociação relacionada à tarefa',
+	},
+	{
+		displayName: 'Responsável',
+		name: 'user_id',
+		type: 'options',
+		required: true,
+		typeOptions: { loadOptionsMethod: 'getUsers' },
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['create'],
+			},
+		},
+		default: '',
+		description: 'Usuário responsável pela tarefa',
+	},
+	{
+		displayName: 'Data',
+		name: 'date',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['create'],
+			},
+		},
+		default: '',
+		placeholder: 'YYYY-MM-DD',
+		description: 'Data da tarefa (formato YYYY-MM-DD)',
+	},
+	{
+		displayName: 'Hora',
+		name: 'hour',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['task'],
+				operation: ['create'],
+			},
+		},
+		default: '',
+		placeholder: 'HH:mm',
+		description: 'Hora da tarefa (formato HH:mm)',
 	},
 
 	// ----------------------------------
 	//         task: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -132,10 +195,10 @@ export const taskFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -150,17 +213,17 @@ export const taskFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
 	//    task: create / update — Additional Fields
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -170,76 +233,86 @@ export const taskFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Body',
-				name: 'body',
-				type: 'string',
-				default: '',
-				description: 'Description or notes for the task',
-			},
-			{
-				displayName: 'Subject',
+				displayName: 'Assunto',
 				name: 'subject',
 				type: 'string',
 				default: '',
-				description: 'The title/subject of the task (for updating)',
+				description: 'Título ou assunto da tarefa',
 			},
 			{
-				displayName: 'Type',
+				displayName: 'Tipo',
 				name: 'type',
 				type: 'options',
 				options: [
-					{ name: 'Call', value: 'call' },
-					{ name: 'Email', value: 'email' },
-					{ name: 'Lunch', value: 'lunch' },
-					{ name: 'Meeting', value: 'meeting' },
-					{ name: 'Task', value: 'task' },
-					{ name: 'Visit', value: 'visit' },
+					{ name: 'Almoço', value: 'lunch' },
+					{ name: 'E-mail', value: 'email' },
+					{ name: 'Ligação', value: 'call' },
+					{ name: 'Reunião', value: 'meeting' },
+					{ name: 'Tarefa', value: 'task' },
+					{ name: 'Visita', value: 'visit' },
 					{ name: 'WhatsApp', value: 'whatsapp' },
 				],
 				default: 'task',
-				description: 'The type of the task (for updating)',
+				description: 'O tipo da tarefa',
 			},
 			{
-				displayName: 'Contact ID',
-				name: 'contact_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the related contact',
-			},
-			{
-				displayName: 'Deal ID',
+				displayName: 'ID da Negociação',
 				name: 'deal_id',
 				type: 'string',
 				default: '',
-				description: 'The ID of the related deal',
+				description: 'ID da negociação relacionada à tarefa',
 			},
 			{
-				displayName: 'Done',
+				displayName: 'Responsável',
+				name: 'user_id',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getUsers' },
+				default: '',
+				description: 'Usuário responsável pela tarefa',
+			},
+			{
+				displayName: 'Data',
+				name: 'date',
+				type: 'string',
+				default: '',
+				placeholder: 'YYYY-MM-DD',
+				description: 'Data da tarefa (formato YYYY-MM-DD)',
+			},
+			{
+				displayName: 'Hora',
+				name: 'hour',
+				type: 'string',
+				default: '',
+				placeholder: 'HH:mm',
+				description: 'Hora da tarefa (formato HH:mm)',
+			},
+			{
+				displayName: 'ID do Contato',
+				name: 'contact_id',
+				type: 'string',
+				default: '',
+				description: 'O ID do contato relacionado à tarefa',
+			},
+			{
+				displayName: 'Concluída',
 				name: 'done',
 				type: 'boolean',
 				default: false,
-				description: 'Whether the task has been completed',
+				description: 'Se a tarefa foi concluída',
 			},
 			{
-				displayName: 'Due Date',
-				name: 'due_date',
-				type: 'dateTime',
+				displayName: 'Observações',
+				name: 'notes',
+				type: 'string',
 				default: '',
-				description: 'Due date for the task',
+				description: 'Observações ou descrição da tarefa',
 			},
 			{
-				displayName: 'Organization ID',
+				displayName: 'ID da Empresa',
 				name: 'organization_id',
 				type: 'string',
 				default: '',
-				description: 'The ID of the related organization',
-			},
-			{
-				displayName: 'User ID',
-				name: 'user_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the assigned user for the task',
+				description: 'O ID da empresa relacionada à tarefa',
 			},
 		],
 	},
@@ -248,10 +321,10 @@ export const taskFields: INodeProperties[] = [
 	//         task: getAll — Filters
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -261,76 +334,48 @@ export const taskFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Contact ID',
+				displayName: 'ID do Contato',
 				name: 'contact_id',
 				type: 'string',
 				default: '',
-				description: 'Filter tasks by related contact ID',
+				description: 'Filtrar tarefas pelo ID do contato relacionado',
 			},
 			{
-				displayName: 'Deal ID',
+				displayName: 'ID da Negociação',
 				name: 'deal_id',
 				type: 'string',
 				default: '',
-				description: 'Filter tasks by related deal ID',
+				description: 'Filtrar tarefas pelo ID da negociação relacionada',
 			},
 			{
-				displayName: 'Done',
+				displayName: 'Concluída',
 				name: 'done',
 				type: 'boolean',
 				default: false,
-				description: 'Filter tasks by completion status',
+				description: 'Filtrar tarefas pelo status de conclusão',
 			},
 			{
-				displayName: 'Due Date',
-				name: 'due_date',
-				type: 'dateTime',
-				default: '',
-				description: 'Filter tasks by due date',
-			},
-			{
-				displayName: 'Type',
+				displayName: 'Tipo',
 				name: 'type',
 				type: 'options',
 				options: [
-					{
-						name: 'Call',
-						value: 'call',
-					},
-					{
-						name: 'Email',
-						value: 'email',
-					},
-					{
-						name: 'Lunch',
-						value: 'lunch',
-					},
-					{
-						name: 'Meeting',
-						value: 'meeting',
-					},
-					{
-						name: 'Task',
-						value: 'task',
-					},
-					{
-						name: 'Visit',
-						value: 'visit',
-					},
-					{
-						name: 'WhatsApp',
-						value: 'whatsapp',
-					},
+					{ name: 'Almoço', value: 'lunch' },
+					{ name: 'E-mail', value: 'email' },
+					{ name: 'Ligação', value: 'call' },
+					{ name: 'Reunião', value: 'meeting' },
+					{ name: 'Tarefa', value: 'task' },
+					{ name: 'Visita', value: 'visit' },
+					{ name: 'WhatsApp', value: 'whatsapp' },
 				],
 				default: 'task',
-				description: 'Filter tasks by type',
+				description: 'Filtrar tarefas pelo tipo',
 			},
 			{
-				displayName: 'User ID',
+				displayName: 'ID do Responsável',
 				name: 'user_id',
 				type: 'string',
 				default: '',
-				description: 'Filter tasks by assigned user ID',
+				description: 'Filtrar tarefas pelo ID do responsável',
 			},
 		],
 	},

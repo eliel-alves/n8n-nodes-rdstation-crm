@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const dealPipelineOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const dealPipelineOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a deal pipeline',
+				description: 'Cria um novo funil de vendas',
+				action: 'Criar um funil de vendas',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a deal pipeline',
+				description: 'Busca um funil pelo ID',
+				action: 'Obter um funil de vendas',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many deal pipelines',
+				description: 'Lista todos os funis de vendas',
+				action: 'Obter vários funis de vendas',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a deal pipeline',
+				description: 'Renomeia um funil de vendas existente',
+				action: 'Atualizar um funil de vendas',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const dealPipelineFields: INodeProperties[] = [
 	//         dealPipeline: get / update
 	// ----------------------------------
 	{
-		displayName: 'Deal Pipeline ID',
+		displayName: 'ID do Funil',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const dealPipelineFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the deal pipeline',
+		description: 'O ID do funil de vendas',
 	},
 
 	// ----------------------------------
 	//         dealPipeline: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,14 +75,14 @@ export const dealPipelineFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name of the deal pipeline',
+		description: 'Nome do funil de vendas',
 	},
 
 	// ----------------------------------
 	//         dealPipeline: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -88,10 +92,10 @@ export const dealPipelineFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -106,17 +110,17 @@ export const dealPipelineFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    dealPipeline: update — Additional Fields
+	//    dealPipeline: update — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -126,11 +130,11 @@ export const dealPipelineFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Name',
+				displayName: 'Nome',
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The new name for the deal pipeline',
+				description: 'Novo nome para o funil',
 			},
 		],
 	},

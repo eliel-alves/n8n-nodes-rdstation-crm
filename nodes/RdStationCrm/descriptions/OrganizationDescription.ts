@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const organizationOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const organizationOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create an organization',
+				description: 'Cria uma nova empresa no CRM',
+				action: 'Criar uma empresa',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get an organization',
+				description: 'Busca uma empresa pelo ID',
+				action: 'Obter uma empresa',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many organizations',
+				description: 'Lista empresas com filtros opcionais',
+				action: 'Obter várias empresas',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update an organization',
+				description: 'Atualiza campos de uma empresa existente',
+				action: 'Atualizar uma empresa',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const organizationFields: INodeProperties[] = [
 	//         organization: get / update
 	// ----------------------------------
 	{
-		displayName: 'Organization ID',
+		displayName: 'ID da Empresa',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const organizationFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the organization',
+		description: 'O ID da empresa',
 	},
 
 	// ----------------------------------
 	//         organization: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,14 +75,14 @@ export const organizationFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name of the organization',
+		description: 'Nome da empresa',
 	},
 
 	// ----------------------------------
 	//         organization: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -88,10 +92,10 @@ export const organizationFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -106,17 +110,17 @@ export const organizationFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
 	//    organization: create / update — Additional Fields
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -126,102 +130,103 @@ export const organizationFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Address',
+				displayName: 'Endereço',
 				name: 'address',
 				type: 'string',
 				default: '',
-				description: 'Full address of the organization',
+				description: 'Endereço completo da empresa',
 			},
 			{
-				displayName: 'City',
+				displayName: 'Cidade',
 				name: 'city',
 				type: 'string',
 				default: '',
-				description: 'City of the organization',
+				description: 'Cidade da empresa',
 			},
 			{
-				displayName: 'Country',
+				displayName: 'País',
 				name: 'country',
 				type: 'string',
 				default: '',
-				description: 'Country of the organization',
+				description: 'País da empresa',
 			},
 			{
-				displayName: 'Description',
-				name: 'description',
-				type: 'string',
-				default: '',
-				description: 'Description or notes for the organization',
-			},
-			{
-				displayName: 'Email',
+				displayName: 'E-mail',
 				name: 'email',
 				type: 'string',
 				default: '',
-				description: 'Main email address of the organization',
+				description: 'E-mail principal da empresa',
 			},
 			{
 				displayName: 'Facebook',
 				name: 'facebook',
 				type: 'string',
 				default: '',
-				description: 'Facebook URL of the organization',
+				description: 'URL do Facebook da empresa',
 			},
 			{
 				displayName: 'Instagram',
 				name: 'instagram',
 				type: 'string',
 				default: '',
-				description: 'Instagram handle of the organization',
+				description: 'Perfil do Instagram da empresa',
 			},
 			{
 				displayName: 'LinkedIn',
 				name: 'linkedin',
 				type: 'string',
 				default: '',
-				description: 'LinkedIn URL of the organization',
+				description: 'URL do LinkedIn da empresa',
 			},
 			{
-				displayName: 'Phone',
+				displayName: 'Telefone',
 				name: 'phone',
 				type: 'string',
 				default: '',
-				description: 'Main phone number of the organization',
+				description: 'Telefone principal da empresa',
 			},
 			{
-				displayName: 'State',
+				displayName: 'Descrição',
+				name: 'resume',
+				type: 'string',
+				default: '',
+				description: 'Descrição ou observações da empresa',
+			},
+			{
+				displayName: 'Estado',
 				name: 'state',
 				type: 'string',
 				default: '',
-				description: 'State of the organization',
+				description: 'Estado da empresa',
 			},
 			{
 				displayName: 'Twitter',
 				name: 'twitter',
 				type: 'string',
 				default: '',
-				description: 'Twitter handle of the organization',
+				description: 'Perfil do Twitter da empresa',
 			},
 			{
-				displayName: 'User ID',
+				displayName: 'ID do Responsável',
 				name: 'user_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getUsers' },
 				default: '',
-				description: 'The ID of the owner user for the organization',
+				description: 'O ID do usuário responsável pela empresa',
 			},
 			{
 				displayName: 'Website',
-				name: 'website',
+				name: 'url',
 				type: 'string',
 				default: '',
-				description: 'Company website URL of the organization',
+				description: 'URL do site da empresa',
 			},
 			{
-				displayName: 'Zip Code',
+				displayName: 'CEP',
 				name: 'zip_code',
 				type: 'string',
 				default: '',
-				description: 'Zip code of the organization',
+				description: 'CEP da empresa',
 			},
 		],
 	},
@@ -230,10 +235,10 @@ export const organizationFields: INodeProperties[] = [
 	//         organization: getAll — Filters
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -243,18 +248,59 @@ export const organizationFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Search',
+				displayName: 'Busca',
 				name: 'q',
 				type: 'string',
 				default: '',
-				description: 'Search organizations by name (partial match)',
+				description: 'Buscar por nome',
 			},
 			{
-				displayName: 'User ID',
+				displayName: 'ID do Responsável',
 				name: 'user_id',
 				type: 'string',
 				default: '',
-				description: 'Filter organizations by owner user ID',
+				description: 'Filtrar empresas pelo ID do responsável',
+			},
+		],
+	},
+
+	// ----------------------------------
+	//    organization: create / update — Custom Fields
+	// ----------------------------------
+	{
+		displayName: 'Campos Personalizados',
+		name: 'organization_custom_fields',
+		type: 'fixedCollection',
+		typeOptions: { multipleValues: true },
+		placeholder: 'Adicionar Campo Personalizado',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['organization'],
+				operation: ['create', 'update'],
+			},
+		},
+		options: [
+			{
+				name: 'customFieldValues',
+				displayName: 'Campo Personalizado',
+				values: [
+					{
+						displayName: 'Campo',
+						name: 'custom_field_id',
+						type: 'options',
+						typeOptions: { loadOptionsMethod: 'getOrganizationCustomFields' },
+						default: '',
+						description: 'Selecione o campo personalizado',
+					},
+					{
+						displayName: 'Valor',
+						name: 'value',
+						type: 'string',
+						default: '',
+						description: 'Valor do campo personalizado',
+					},
+				],
 			},
 		],
 	},

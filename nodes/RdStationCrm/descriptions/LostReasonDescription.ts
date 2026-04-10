@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const lostReasonOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,14 +13,16 @@ export const lostReasonOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a lost reason',
+				description: 'Cria um novo motivo de perda de negociação',
+				action: 'Criar um motivo de perda',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many lost reasons',
+				description: 'Lista todos os motivos de perda cadastrados',
+				action: 'Obter vários motivos de perda',
 			},
 		],
 		default: 'getAll',
@@ -32,7 +34,7 @@ export const lostReasonFields: INodeProperties[] = [
 	//         lostReason: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -43,14 +45,14 @@ export const lostReasonFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name of the lost reason',
+		description: 'Nome do motivo de perda',
 	},
 
 	// ----------------------------------
 	//         lostReason: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -60,10 +62,10 @@ export const lostReasonFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -78,17 +80,17 @@ export const lostReasonFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//         lostReason: getAll — Filters
+	//         lostReason: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -98,11 +100,11 @@ export const lostReasonFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Search',
+				displayName: 'Busca',
 				name: 'q',
 				type: 'string',
 				default: '',
-				description: 'Search lost reasons by name',
+				description: 'Buscar motivos de perda por nome',
 			},
 		],
 	},

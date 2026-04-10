@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const dealStageOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const dealStageOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a deal stage',
+				description: 'Cria uma nova etapa dentro de um funil',
+				action: 'Criar uma etapa do funil',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a deal stage',
+				description: 'Busca uma etapa pelo ID',
+				action: 'Obter uma etapa do funil',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many deal stages',
+				description: 'Lista etapas com filtro por funil',
+				action: 'Obter várias etapas do funil',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a deal stage',
+				description: 'Atualiza nome, descrição ou ordem de uma etapa',
+				action: 'Atualizar uma etapa do funil',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const dealStageFields: INodeProperties[] = [
 	//         dealStage: get / update
 	// ----------------------------------
 	{
-		displayName: 'Deal Stage ID',
+		displayName: 'ID da Etapa',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const dealStageFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the deal stage',
+		description: 'O ID da etapa do funil',
 	},
 
 	// ----------------------------------
 	//         dealStage: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,13 +75,14 @@ export const dealStageFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name of the deal stage',
+		description: 'Nome da etapa',
 	},
 	{
-		displayName: 'Deal Pipeline ID',
+		displayName: 'Funil de Vendas',
 		name: 'deal_pipeline_id',
-		type: 'string',
+		type: 'options',
 		required: true,
+		typeOptions: { loadOptionsMethod: 'getPipelines' },
 		displayOptions: {
 			show: {
 				resource: ['dealStage'],
@@ -85,14 +90,14 @@ export const dealStageFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the pipeline this stage belongs to',
+		description: 'Funil ao qual a etapa pertence',
 	},
 
 	// ----------------------------------
 	//         dealStage: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -102,10 +107,10 @@ export const dealStageFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -120,76 +125,72 @@ export const dealStageFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    dealStage: create — Additional Fields
+	//    dealStage: create / update — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
 				resource: ['dealStage'],
-				operation: ['create'],
+				operation: ['create', 'update'],
 			},
 		},
 		options: [
 			{
-				displayName: 'Nickname',
-				name: 'nickname',
-				type: 'string',
-				default: '',
-				description: 'Short code for the deal stage (e.g., "NL", "QF")',
-			},
-		],
-	},
-
-	// ----------------------------------
-	//    dealStage: update — Additional Fields
-	// ----------------------------------
-	{
-		displayName: 'Additional Fields',
-		name: 'additionalFields',
-		type: 'collection',
-		placeholder: 'Add Field',
-		default: {},
-		displayOptions: {
-			show: {
-				resource: ['dealStage'],
-				operation: ['update'],
-			},
-		},
-		options: [
-			{
-				displayName: 'Name',
+				displayName: 'Nome',
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The new name for the deal stage',
+				description: 'Novo nome para a etapa do funil',
 			},
 			{
-				displayName: 'Nickname',
-				name: 'nickname',
+				displayName: 'Funil de Vendas',
+				name: 'deal_pipeline_id',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getPipelines' },
+				default: '',
+				description: 'Funil ao qual a etapa pertence',
+			},
+			{
+				displayName: 'Descrição',
+				name: 'description',
 				type: 'string',
 				default: '',
-				description: 'Short code for the deal stage (e.g., "NL", "QF")',
+				description: 'Descrição da etapa do funil',
+			},
+			{
+				displayName: 'Objetivo',
+				name: 'objective',
+				type: 'string',
+				default: '',
+				description: 'Objetivo desta etapa do funil',
+			},
+			{
+				displayName: 'Ordem',
+				name: 'order',
+				type: 'number',
+				default: 0,
+				description: 'Posição de exibição',
 			},
 		],
 	},
 
 	// ----------------------------------
-	//    dealStage: getAll — Filters
+	//    dealStage: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -199,11 +200,12 @@ export const dealStageFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Deal Pipeline ID',
+				displayName: 'Funil de Vendas',
 				name: 'deal_pipeline_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getPipelines' },
 				default: '',
-				description: 'Filter stages by pipeline ID',
+				description: 'Filtrar etapas pelo funil de vendas',
 			},
 		],
 	},

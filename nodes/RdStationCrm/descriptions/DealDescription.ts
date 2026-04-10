@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const dealOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const dealOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a deal',
+				description: 'Cria uma nova negociação no CRM',
+				action: 'Criar uma negociação',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a deal',
+				description: 'Busca uma negociação pelo ID',
+				action: 'Obter uma negociação',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many deals',
+				description: 'Lista negociações com filtros opcionais',
+				action: 'Obter várias negociações',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a deal',
+				description: 'Atualiza campos de uma negociação existente',
+				action: 'Atualizar uma negociação',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const dealFields: INodeProperties[] = [
 	//         deal: get / update
 	// ----------------------------------
 	{
-		displayName: 'Deal ID',
+		displayName: 'ID da Negociação',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const dealFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the deal',
+		description: 'O ID da negociação',
 	},
 
 	// ----------------------------------
 	//         deal: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,14 +75,242 @@ export const dealFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name/title of the deal',
+		description: 'O nome/título da negociação',
+	},
+
+	// ----------------------------------
+	//    deal: create / update — Campos de Pipeline, Etapa e Usuário
+	// ----------------------------------
+	{
+		displayName: 'Funil',
+		name: 'deal_pipeline_id',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getPipelines',
+		},
+		displayOptions: {
+			show: {
+				resource: ['deal'],
+				operation: ['create', 'update'],
+			},
+		},
+		default: '',
+		description: 'O funil ao qual a negociação pertence',
+	},
+	{
+		displayName: 'Etapa do Funil',
+		name: 'deal_stage_id',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getStages',
+			loadOptionsDependsOn: ['deal_pipeline_id'],
+		},
+		displayOptions: {
+			show: {
+				resource: ['deal'],
+				operation: ['create', 'update'],
+			},
+		},
+		default: '',
+		description: 'A etapa do funil para a negociação',
+	},
+	{
+		displayName: 'Responsável',
+		name: 'user_id',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getUsers',
+		},
+		displayOptions: {
+			show: {
+				resource: ['deal'],
+				operation: ['create', 'update'],
+			},
+		},
+		default: '',
+		description: 'O usuário responsável pela negociação',
+	},
+
+	// ----------------------------------
+	//    deal: create / update — Campos Adicionais
+	// ----------------------------------
+	{
+		displayName: 'Campos Adicionais',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Adicionar Campo',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['deal'],
+				operation: ['create', 'update'],
+			},
+		},
+		options: [
+			{
+				displayName: 'Valor Mensal (MRR)',
+				name: 'amount_montly',
+				type: 'number',
+				default: 0,
+				description: 'Valor recorrente mensal da negociação',
+			},
+			{
+				displayName: 'Valor Único',
+				name: 'amount_unique',
+				type: 'number',
+				default: 0,
+				description: 'Valor único da negociação',
+			},
+			{
+				displayName: 'Valor Total',
+				name: 'amount_total',
+				type: 'number',
+				default: 0,
+				description: 'Valor total da negociação',
+			},
+			{
+				displayName: 'Campanha',
+				name: 'campaign_id',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getCampaigns',
+				},
+				default: '',
+				description: 'A campanha associada à negociação',
+			},
+			{
+				displayName: 'Motivo de Perda',
+				name: 'deal_lost_reason_id',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getLostReasons',
+				},
+				default: '',
+				description: 'O motivo de perda da negociação',
+			},
+			{
+				displayName: 'Fonte da Negociação',
+				name: 'deal_source_id',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getSources',
+				},
+				default: '',
+				description: 'A fonte da negociação',
+			},
+			{
+				displayName: 'Descrição',
+				name: 'description',
+				type: 'string',
+				default: '',
+				description: 'Notas ou descrição adicional da negociação',
+			},
+			{
+				displayName: 'Em Espera',
+				name: 'hold',
+				type: 'boolean',
+				default: false,
+				description: 'Se a negociação está em espera',
+			},
+			{
+				displayName: 'Previsão de Fechamento',
+				name: 'prediction_date',
+				type: 'dateTime',
+				default: '',
+				description: 'Data prevista de fechamento da negociação',
+			},
+			{
+				displayName: 'Temperatura',
+				name: 'rating',
+				type: 'options',
+				options: [
+					{
+						name: 'Sem Avaliação',
+						value: 0,
+					},
+					{
+						name: 'Fria',
+						value: 1,
+					},
+					{
+						name: 'Morna',
+						value: 2,
+					},
+					{
+						name: 'Quente',
+						value: 3,
+					},
+				],
+				default: 0,
+				description: 'A temperatura/avaliação da negociação',
+			},
+			{
+				displayName: 'Negociação Ganha',
+				name: 'win',
+				type: 'boolean',
+				default: false,
+				description: 'Se a negociação foi ganha',
+			},
+			{
+				displayName: 'ID do Contato',
+				name: 'contact_id',
+				type: 'string',
+				default: '',
+				description: 'ID de um contato existente para vincular à negociação',
+			},
+		],
+	},
+
+	// ----------------------------------
+	//    deal: create / update — Campos Personalizados
+	// ----------------------------------
+	{
+		displayName: 'Campos Personalizados',
+		name: 'deal_custom_fields',
+		type: 'fixedCollection',
+		typeOptions: {
+			multipleValues: true,
+		},
+		placeholder: 'Adicionar Campo Personalizado',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['deal'],
+				operation: ['create', 'update'],
+			},
+		},
+		options: [
+			{
+				name: 'customFieldValues',
+				displayName: 'Campo Personalizado',
+				values: [
+					{
+						displayName: 'Campo',
+						name: 'custom_field_id',
+						type: 'options',
+						typeOptions: {
+							loadOptionsMethod: 'getDealCustomFields',
+						},
+						default: '',
+						description: 'Selecione o campo personalizado',
+					},
+					{
+						displayName: 'Valor',
+						name: 'value',
+						type: 'string',
+						default: '',
+						description: 'Valor do campo personalizado',
+					},
+				],
+			},
+		],
 	},
 
 	// ----------------------------------
 	//         deal: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -88,10 +320,10 @@ export const dealFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -106,153 +338,17 @@ export const dealFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    deal: create / update — Additional Fields
+	//         deal: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
-		name: 'additionalFields',
-		type: 'collection',
-		placeholder: 'Add Field',
-		default: {},
-		displayOptions: {
-			show: {
-				resource: ['deal'],
-				operation: ['create', 'update'],
-			},
-		},
-		options: [
-			{
-				// TODO: Verify exact API field name - may be 'amount_montly' (API typo) or 'amount_monthly'
-				displayName: 'Amount (Monthly)',
-				name: 'amount_montly',
-				type: 'number',
-				default: 0,
-				description: 'Monthly recurring amount for the deal',
-			},
-			{
-				displayName: 'Amount (One-Time)',
-				name: 'amount_unique',
-				type: 'number',
-				default: 0,
-				description: 'One-time amount for the deal',
-			},
-			{
-				displayName: 'Amount (Total)',
-				name: 'amount_total',
-				type: 'number',
-				default: 0,
-				description: 'Total amount for the deal',
-			},
-			{
-				displayName: 'Campaign ID',
-				name: 'campaign_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the campaign associated with the deal',
-			},
-			{
-				displayName: 'Deal Lost Reason ID',
-				name: 'deal_lost_reason_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the lost reason for the deal',
-			},
-			{
-				displayName: 'Deal Pipeline ID',
-				name: 'deal_pipeline_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the pipeline/funnel for the deal',
-			},
-			{
-				displayName: 'Deal Source ID',
-				name: 'deal_source_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the deal source',
-			},
-			{
-				displayName: 'Deal Stage ID',
-				name: 'deal_stage_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the funnel stage for the deal',
-			},
-			{
-				displayName: 'Description',
-				name: 'description',
-				type: 'string',
-				default: '',
-				description: 'Additional notes or description for the deal',
-			},
-			{
-				displayName: 'Hold',
-				name: 'hold',
-				type: 'boolean',
-				default: false,
-				description: 'Whether the deal is currently on hold',
-			},
-			{
-				displayName: 'Prediction Date',
-				name: 'prediction_date',
-				type: 'dateTime',
-				default: '',
-				description: 'Expected close date for the deal',
-			},
-			{
-				displayName: 'Rating',
-				name: 'rating',
-				type: 'options',
-				options: [
-					{
-						name: 'No Rating',
-						value: 0,
-					},
-					{
-						name: 'Cold',
-						value: 1,
-					},
-					{
-						name: 'Warm',
-						value: 2,
-					},
-					{
-						name: 'Hot',
-						value: 3,
-					},
-				],
-				default: 0,
-				description: 'The temperature/rating of the deal',
-			},
-			{
-				displayName: 'User ID',
-				name: 'user_id',
-				type: 'string',
-				default: '',
-				description: 'The ID of the user responsible for the deal',
-			},
-			{
-				displayName: 'Win',
-				name: 'win',
-				type: 'boolean',
-				default: false,
-				description: 'Whether the deal has been won',
-			},
-		],
-	},
-
-	// ----------------------------------
-	//         deal: getAll — Filters
-	// ----------------------------------
-	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -262,88 +358,107 @@ export const dealFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Campaign ID',
+				displayName: 'Campanha',
 				name: 'campaign_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getCampaigns',
+				},
 				default: '',
-				description: 'Filter deals by campaign ID',
+				description: 'Filtrar negociações por campanha',
 			},
 			{
-				displayName: 'Created At',
+				displayName: 'Criado Em',
 				name: 'created_at',
 				type: 'dateTime',
 				default: '',
-				description: 'Filter deals by creation date',
+				description: 'Filtrar negociações por data de criação',
 			},
 			{
-				displayName: 'Deal Lost Reason ID',
+				displayName: 'Motivo de Perda',
 				name: 'deal_lost_reason_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getLostReasons',
+				},
 				default: '',
-				description: 'Filter deals by lost reason ID',
+				description: 'Filtrar negociações por motivo de perda',
 			},
 			{
-				displayName: 'Deal Pipeline ID',
+				displayName: 'Funil',
 				name: 'deal_pipeline_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getPipelines',
+				},
 				default: '',
-				description: 'Filter deals by pipeline ID',
+				description: 'Filtrar negociações por funil',
 			},
 			{
-				displayName: 'Deal Source ID',
+				displayName: 'Fonte da Negociação',
 				name: 'deal_source_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getSources',
+				},
 				default: '',
-				description: 'Filter deals by source ID',
+				description: 'Filtrar negociações por fonte',
 			},
 			{
-				displayName: 'Deal Stage ID',
+				displayName: 'Etapa do Funil',
 				name: 'deal_stage_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getStages',
+					loadOptionsDependsOn: ['filters.deal_pipeline_id'],
+				},
 				default: '',
-				description: 'Filter deals by stage ID',
+				description: 'Filtrar negociações por etapa do funil',
 			},
 			{
-				displayName: 'Hold',
+				displayName: 'Em Espera',
 				name: 'hold',
 				type: 'boolean',
 				default: false,
-				description: 'Filter deals by hold status',
+				description: 'Filtrar negociações por status de espera',
 			},
 			{
-				displayName: 'Name',
+				displayName: 'Nome (busca parcial)',
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'Filter deals by name (partial match)',
+				description: 'Filtrar negociações por nome (busca parcial)',
 			},
 			{
-				displayName: 'Prediction Date',
+				displayName: 'Previsão de Fechamento',
 				name: 'prediction_date',
 				type: 'dateTime',
 				default: '',
-				description: 'Filter deals by expected close date',
+				description: 'Filtrar negociações por data prevista de fechamento',
 			},
 			{
-				displayName: 'Updated At',
+				displayName: 'Atualizado Em',
 				name: 'updated_at',
 				type: 'dateTime',
 				default: '',
-				description: 'Filter deals by last update date',
+				description: 'Filtrar negociações por data de atualização',
 			},
 			{
-				displayName: 'User ID',
+				displayName: 'Responsável',
 				name: 'user_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getUsers',
+				},
 				default: '',
-				description: 'Filter deals by responsible user ID',
+				description: 'Filtrar negociações por usuário responsável',
 			},
 			{
-				displayName: 'Win',
+				displayName: 'Negociação Ganha',
 				name: 'win',
 				type: 'boolean',
 				default: false,
-				description: 'Filter deals by win status',
+				description: 'Filtrar negociações por status de ganho',
 			},
 		],
 	},

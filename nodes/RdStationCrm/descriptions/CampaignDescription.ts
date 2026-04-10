@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const campaignOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const campaignOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a campaign',
+				description: 'Cria uma nova campanha',
+				action: 'Criar uma campanha',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a campaign',
+				description: 'Busca uma campanha pelo ID',
+				action: 'Obter uma campanha',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many campaigns',
+				description: 'Lista campanhas cadastradas',
+				action: 'Obter várias campanhas',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a campaign',
+				description: 'Atualiza nome ou descrição de uma campanha',
+				action: 'Atualizar uma campanha',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const campaignFields: INodeProperties[] = [
 	//         campaign: get / update
 	// ----------------------------------
 	{
-		displayName: 'Campaign ID',
+		displayName: 'ID da Campanha',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const campaignFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the campaign',
+		description: 'O ID da campanha',
 	},
 
 	// ----------------------------------
 	//         campaign: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,14 +75,14 @@ export const campaignFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name of the campaign',
+		description: 'Nome da campanha',
 	},
 
 	// ----------------------------------
 	//         campaign: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -88,10 +92,10 @@ export const campaignFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -106,43 +110,50 @@ export const campaignFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    campaign: update — Additional Fields
+	//    campaign: create / update — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
 				resource: ['campaign'],
-				operation: ['update'],
+				operation: ['create', 'update'],
 			},
 		},
 		options: [
 			{
-				displayName: 'Name',
+				displayName: 'Nome',
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The new name for the campaign',
+				description: 'Novo nome para a campanha',
+			},
+			{
+				displayName: 'Descrição',
+				name: 'description',
+				type: 'string',
+				default: '',
+				description: 'Descrição da campanha',
 			},
 		],
 	},
 
 	// ----------------------------------
-	//         campaign: getAll — Filters
+	//         campaign: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -152,11 +163,11 @@ export const campaignFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Search',
+				displayName: 'Busca',
 				name: 'q',
 				type: 'string',
 				default: '',
-				description: 'Search campaigns by name',
+				description: 'Buscar campanha por nome',
 			},
 		],
 	},

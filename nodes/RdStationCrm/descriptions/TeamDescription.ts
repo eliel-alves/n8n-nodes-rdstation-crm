@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const teamOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,14 +13,16 @@ export const teamOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a team',
+				description: 'Busca uma equipe pelo ID',
+				action: 'Obter uma equipe',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many teams',
+				description: 'Lista todas as equipes do CRM',
+				action: 'Obter várias equipes',
 			},
 		],
 		default: 'getAll',
@@ -32,7 +34,7 @@ export const teamFields: INodeProperties[] = [
 	//         team: get
 	// ----------------------------------
 	{
-		displayName: 'Team ID',
+		displayName: 'ID da Equipe',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -43,14 +45,14 @@ export const teamFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the team',
+		description: 'O ID da equipe',
 	},
 
 	// ----------------------------------
 	//         team: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -60,10 +62,10 @@ export const teamFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -78,6 +80,6 @@ export const teamFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 ];

@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const sourceOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const sourceOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a source',
+				description: 'Cria uma nova fonte de negociação',
+				action: 'Criar uma fonte',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a source',
+				description: 'Busca uma fonte pelo ID',
+				action: 'Obter uma fonte',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many sources',
+				description: 'Lista fontes de negociação cadastradas',
+				action: 'Obter várias fontes',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a source',
+				description: 'Atualiza nome ou descrição de uma fonte',
+				action: 'Atualizar uma fonte',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const sourceFields: INodeProperties[] = [
 	//         source: get / update
 	// ----------------------------------
 	{
-		displayName: 'Source ID',
+		displayName: 'ID da Fonte',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const sourceFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the source',
+		description: 'O ID da fonte',
 	},
 
 	// ----------------------------------
 	//         source: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,14 +75,14 @@ export const sourceFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The name of the deal source',
+		description: 'Nome da fonte de negociação',
 	},
 
 	// ----------------------------------
 	//         source: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -88,10 +92,10 @@ export const sourceFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -106,43 +110,50 @@ export const sourceFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    source: update — Additional Fields
+	//    source: create / update — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
 				resource: ['source'],
-				operation: ['update'],
+				operation: ['create', 'update'],
 			},
 		},
 		options: [
 			{
-				displayName: 'Name',
+				displayName: 'Nome',
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The new name for the source',
+				description: 'Novo nome para a fonte',
+			},
+			{
+				displayName: 'Descrição',
+				name: 'description',
+				type: 'string',
+				default: '',
+				description: 'Descrição da fonte',
 			},
 		],
 	},
 
 	// ----------------------------------
-	//         source: getAll — Filters
+	//         source: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -152,11 +163,11 @@ export const sourceFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Search',
+				displayName: 'Busca',
 				name: 'q',
 				type: 'string',
 				default: '',
-				description: 'Search sources by name',
+				description: 'Buscar fonte por nome',
 			},
 		],
 	},

@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const contactOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const contactOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a contact',
+				description: 'Cria um novo contato no CRM',
+				action: 'Criar um contato',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a contact',
+				description: 'Busca um contato pelo ID',
+				action: 'Obter um contato',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many contacts',
+				description: 'Lista contatos com filtros opcionais',
+				action: 'Obter vários contatos',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a contact',
+				description: 'Atualiza campos de um contato existente',
+				action: 'Atualizar um contato',
 			},
 		],
 		default: 'getAll',
@@ -42,7 +46,7 @@ export const contactFields: INodeProperties[] = [
 	//         contact: get / update
 	// ----------------------------------
 	{
-		displayName: 'Contact ID',
+		displayName: 'ID do Contato',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -53,14 +57,14 @@ export const contactFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the contact',
+		description: 'O ID do contato',
 	},
 
 	// ----------------------------------
 	//         contact: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
+		displayName: 'Nome',
 		name: 'name',
 		type: 'string',
 		required: true,
@@ -71,14 +75,14 @@ export const contactFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The full name of the contact',
+		description: 'Nome completo do contato',
 	},
 
 	// ----------------------------------
 	//         contact: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -88,10 +92,10 @@ export const contactFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -106,17 +110,17 @@ export const contactFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
 	//    contact: create / update — Additional Fields
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -126,14 +130,42 @@ export const contactFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Birthday',
+				displayName: 'Data de Nascimento',
 				name: 'birthday',
-				type: 'dateTime',
-				default: '',
-				description: 'Birth date of the contact',
+				type: 'fixedCollection',
+				default: {},
+				options: [
+					{
+						name: 'birthdayValues',
+						displayName: 'Data de Nascimento',
+						values: [
+							{
+								displayName: 'Dia',
+								name: 'day',
+								type: 'number',
+								default: 1,
+								typeOptions: { minValue: 1, maxValue: 31 },
+							},
+							{
+								displayName: 'Mês',
+								name: 'month',
+								type: 'number',
+								default: 1,
+								typeOptions: { minValue: 1, maxValue: 12 },
+							},
+							{
+								displayName: 'Ano',
+								name: 'year',
+								type: 'number',
+								default: 2000,
+								typeOptions: { minValue: 1900, maxValue: 2100 },
+							},
+						],
+					},
+				],
 			},
 			{
-				displayName: 'Emails',
+				displayName: 'E-mails',
 				name: 'emails',
 				type: 'fixedCollection',
 				typeOptions: { multipleValues: true },
@@ -141,10 +173,10 @@ export const contactFields: INodeProperties[] = [
 				options: [
 					{
 						name: 'emailValues',
-						displayName: 'Email',
+						displayName: 'E-mail',
 						values: [
 							{
-								displayName: 'Email',
+								displayName: 'E-mail',
 								name: 'email',
 								type: 'string',
 								default: '',
@@ -158,38 +190,38 @@ export const contactFields: INodeProperties[] = [
 				name: 'facebook',
 				type: 'string',
 				default: '',
-				description: 'Facebook profile URL of the contact',
+				description: 'URL do perfil do Facebook do contato',
 			},
 			{
 				displayName: 'Instagram',
 				name: 'instagram',
 				type: 'string',
 				default: '',
-				description: 'Instagram handle of the contact',
+				description: 'Perfil do Instagram do contato',
 			},
 			{
 				displayName: 'LinkedIn',
 				name: 'linkedin',
 				type: 'string',
 				default: '',
-				description: 'LinkedIn profile URL of the contact',
+				description: 'URL do perfil do LinkedIn do contato',
 			},
 			{
-				displayName: 'Notes',
+				displayName: 'Observações',
 				name: 'notes',
 				type: 'string',
 				default: '',
-				description: 'Notes or description for the contact',
+				description: 'Observações ou descrição do contato',
 			},
 			{
-				displayName: 'Organization ID',
+				displayName: 'ID da Empresa',
 				name: 'organization_id',
 				type: 'string',
 				default: '',
-				description: 'The ID of the organization/company associated with the contact',
+				description: 'O ID da empresa associada ao contato',
 			},
 			{
-				displayName: 'Phones',
+				displayName: 'Telefones',
 				name: 'phones',
 				type: 'fixedCollection',
 				typeOptions: { multipleValues: true },
@@ -197,21 +229,21 @@ export const contactFields: INodeProperties[] = [
 				options: [
 					{
 						name: 'phoneValues',
-						displayName: 'Phone',
+						displayName: 'Telefone',
 						values: [
 							{
-								displayName: 'Phone',
+								displayName: 'Telefone',
 								name: 'phone',
 								type: 'string',
 								default: '',
 							},
 							{
-								displayName: 'Type',
+								displayName: 'Tipo',
 								name: 'type',
 								type: 'options',
 								options: [
 									{
-										name: 'Cell Phone',
+										name: 'Celular',
 										value: 'cellphone',
 									},
 									{
@@ -219,11 +251,11 @@ export const contactFields: INodeProperties[] = [
 										value: 'fax',
 									},
 									{
-										name: 'Home',
+										name: 'Residencial',
 										value: 'home',
 									},
 									{
-										name: 'Work',
+										name: 'Trabalho',
 										value: 'work',
 									},
 								],
@@ -238,21 +270,21 @@ export const contactFields: INodeProperties[] = [
 				name: 'skype',
 				type: 'string',
 				default: '',
-				description: 'Skype username of the contact',
+				description: 'Nome de usuário do Skype do contato',
 			},
 			{
-				displayName: 'Title',
+				displayName: 'Cargo',
 				name: 'title',
 				type: 'string',
 				default: '',
-				description: 'Job title of the contact',
+				description: 'Cargo do contato',
 			},
 			{
 				displayName: 'Twitter',
 				name: 'twitter',
 				type: 'string',
 				default: '',
-				description: 'Twitter handle of the contact',
+				description: 'Perfil do Twitter do contato',
 			},
 		],
 	},
@@ -261,10 +293,10 @@ export const contactFields: INodeProperties[] = [
 	//         contact: getAll — Filters
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -274,39 +306,80 @@ export const contactFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Email',
+				displayName: 'E-mail',
 				name: 'email',
 				type: 'string',
 				default: '',
-				description: 'Filter contacts by email address',
+				description: 'Filtrar por e-mail',
 			},
 			{
-				displayName: 'Organization ID',
+				displayName: 'ID da Empresa',
 				name: 'organization_id',
 				type: 'string',
 				default: '',
-				description: 'Filter contacts by organization ID',
+				description: 'Filtrar por empresa',
 			},
 			{
-				displayName: 'Phone',
+				displayName: 'Telefone',
 				name: 'phone',
 				type: 'string',
 				default: '',
-				description: 'Filter contacts by phone number',
+				description: 'Filtrar por telefone',
 			},
 			{
-				displayName: 'Search',
+				displayName: 'Busca',
 				name: 'q',
 				type: 'string',
 				default: '',
-				description: 'Search contacts by name (partial match)',
+				description: 'Buscar por nome (correspondência parcial)',
 			},
 			{
-				displayName: 'Title',
+				displayName: 'Cargo',
 				name: 'title',
 				type: 'string',
 				default: '',
-				description: 'Filter contacts by job title',
+				description: 'Filtrar por cargo',
+			},
+		],
+	},
+
+	// ----------------------------------
+	//    contact: create / update — Custom Fields
+	// ----------------------------------
+	{
+		displayName: 'Campos Personalizados',
+		name: 'contact_custom_fields',
+		type: 'fixedCollection',
+		typeOptions: { multipleValues: true },
+		placeholder: 'Adicionar Campo Personalizado',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['create', 'update'],
+			},
+		},
+		options: [
+			{
+				name: 'customFieldValues',
+				displayName: 'Campo Personalizado',
+				values: [
+					{
+						displayName: 'Campo',
+						name: 'custom_field_id',
+						type: 'options',
+						typeOptions: { loadOptionsMethod: 'getContactCustomFields' },
+						default: '',
+						description: 'Selecione o campo personalizado',
+					},
+					{
+						displayName: 'Valor',
+						name: 'value',
+						type: 'string',
+						default: '',
+						description: 'Valor do campo personalizado',
+					},
+				],
 			},
 		],
 	},

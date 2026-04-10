@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const activityOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,14 +13,16 @@ export const activityOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create an activity',
+				description: 'Cria uma anotação em uma negociação',
+				action: 'Criar uma anotação',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many activities',
+				description: 'Lista anotações com filtro por negociação',
+				action: 'Obter várias anotações',
 			},
 		],
 		default: 'getAll',
@@ -29,10 +31,10 @@ export const activityOperations: INodeProperties[] = [
 
 export const activityFields: INodeProperties[] = [
 	// ----------------------------------
-	//         activity: create — required fields
+	//         activity: create — campos obrigatórios
 	// ----------------------------------
 	{
-		displayName: 'Deal ID',
+		displayName: 'ID da Negociação',
 		name: 'deal_id',
 		type: 'string',
 		required: true,
@@ -43,11 +45,11 @@ export const activityFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the deal this activity is related to',
+		description: 'O ID da negociação relacionada a esta anotação',
 	},
 	{
-		displayName: 'Notes',
-		name: 'notes',
+		displayName: 'Texto da Anotação',
+		name: 'text',
 		type: 'string',
 		required: true,
 		displayOptions: {
@@ -57,14 +59,14 @@ export const activityFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'Content/text of the activity',
+		description: 'Conteúdo/texto da anotação',
 	},
 
 	// ----------------------------------
 	//         activity: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -74,10 +76,10 @@ export const activityFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -92,17 +94,17 @@ export const activityFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    activity: create — Additional Fields
+	//    activity: create — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -112,23 +114,24 @@ export const activityFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'User ID',
+				displayName: 'Responsável',
 				name: 'user_id',
-				type: 'string',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getUsers' },
 				default: '',
-				description: 'The ID of the user who created the activity',
+				description: 'Usuário autor da anotação',
 			},
 		],
 	},
 
 	// ----------------------------------
-	//         activity: getAll — Filters
+	//         activity: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -138,11 +141,11 @@ export const activityFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Deal ID',
+				displayName: 'ID da Negociação',
 				name: 'deal_id',
 				type: 'string',
 				default: '',
-				description: 'Filter activities by deal ID',
+				description: 'Filtrar anotações pelo ID da negociação',
 			},
 		],
 	},

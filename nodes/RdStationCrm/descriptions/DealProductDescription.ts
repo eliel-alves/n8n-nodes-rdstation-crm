@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const dealProductOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,24 +13,28 @@ export const dealProductOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Adicionar',
 				value: 'create',
-				action: 'Create a deal product',
+				description: 'Vincula um produto do catálogo a uma negociação',
+				action: 'Adicionar produto à negociação',
 			},
 			{
-				name: 'Delete',
+				name: 'Remover',
 				value: 'delete',
-				action: 'Delete a deal product',
+				description: 'Remove um produto de uma negociação',
+				action: 'Remover produto da negociação',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many deal products',
+				description: 'Lista todos os produtos de uma negociação',
+				action: 'Obter produtos da negociação',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a deal product',
+				description: 'Atualiza quantidade, preço ou desconto de um produto na negociação',
+				action: 'Atualizar produto da negociação',
 			},
 		],
 		default: 'getAll',
@@ -39,10 +43,10 @@ export const dealProductOperations: INodeProperties[] = [
 
 export const dealProductFields: INodeProperties[] = [
 	// ----------------------------------
-	//   dealProduct: all operations — Deal ID
+	//   dealProduct: all operations — ID da Negociação
 	// ----------------------------------
 	{
-		displayName: 'Deal ID',
+		displayName: 'ID da Negociação',
 		name: 'dealId',
 		type: 'string',
 		required: true,
@@ -52,14 +56,14 @@ export const dealProductFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the parent deal',
+		description: 'ID da negociação',
 	},
 
 	// ----------------------------------
-	//   dealProduct: update / delete — Deal Product ID
+	//   dealProduct: update / delete — ID do Produto na Negociação
 	// ----------------------------------
 	{
-		displayName: 'Deal Product ID',
+		displayName: 'ID do Produto na Negociação',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -70,17 +74,18 @@ export const dealProductFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the deal product',
+		description: 'O ID do produto na negociação',
 	},
 
 	// ----------------------------------
-	//         dealProduct: create — required fields
+	//         dealProduct: create — campos obrigatórios
 	// ----------------------------------
 	{
-		displayName: 'Product ID',
+		displayName: 'Produto',
 		name: 'product_id',
-		type: 'string',
+		type: 'options',
 		required: true,
+		typeOptions: { loadOptionsMethod: 'getProducts' },
 		displayOptions: {
 			show: {
 				resource: ['dealProduct'],
@@ -88,10 +93,10 @@ export const dealProductFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the product to add to the deal',
+		description: 'Produto a ser adicionado à negociação',
 	},
 	{
-		displayName: 'Amount',
+		displayName: 'Quantidade',
 		name: 'amount',
 		type: 'number',
 		required: true,
@@ -102,10 +107,10 @@ export const dealProductFields: INodeProperties[] = [
 			},
 		},
 		default: 1,
-		description: 'Quantity of the product',
+		description: 'Quantidade do produto',
 	},
 	{
-		displayName: 'Price',
+		displayName: 'Preço Unitário',
 		name: 'price',
 		type: 'number',
 		required: true,
@@ -116,17 +121,17 @@ export const dealProductFields: INodeProperties[] = [
 			},
 		},
 		default: 0,
-		description: 'Unit price of the product',
+		description: 'Preço unitário do produto',
 	},
 
 	// ----------------------------------
-	//    dealProduct: create / update — Additional Fields
+	//    dealProduct: create / update — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -136,28 +141,35 @@ export const dealProductFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Discount',
+				displayName: 'Desconto',
 				name: 'discount',
 				type: 'number',
 				default: 0,
-				description: 'Discount value applied to the product',
+				description: 'Valor do desconto aplicado ao produto',
 			},
 			{
-				displayName: 'Discount Type',
+				displayName: 'Tipo de Desconto',
 				name: 'discount_type',
 				type: 'options',
 				options: [
 					{
-						name: 'Percentage',
+						name: 'Percentual',
 						value: 'percentage',
 					},
 					{
-						name: 'Fixed Value',
+						name: 'Valor Fixo',
 						value: 'value',
 					},
 				],
 				default: 'percentage',
-				description: 'Type of discount applied',
+				description: 'Tipo de desconto aplicado',
+			},
+			{
+				displayName: 'Recorrência',
+				name: 'recurrence',
+				type: 'string',
+				default: '',
+				description: 'Tipo de recorrência (ex: spare, monthly)',
 			},
 		],
 	},

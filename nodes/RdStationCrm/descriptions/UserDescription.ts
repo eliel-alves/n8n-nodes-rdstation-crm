@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const userOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,14 +13,16 @@ export const userOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a user',
+				description: 'Busca um usuário pelo ID',
+				action: 'Obter um usuário',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many users',
+				description: 'Lista todos os usuários do CRM',
+				action: 'Obter vários usuários',
 			},
 		],
 		default: 'getAll',
@@ -32,7 +34,7 @@ export const userFields: INodeProperties[] = [
 	//         user: get
 	// ----------------------------------
 	{
-		displayName: 'User ID',
+		displayName: 'ID do Usuário',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -43,14 +45,14 @@ export const userFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the user',
+		description: 'O ID do usuário',
 	},
 
 	// ----------------------------------
 	//         user: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -60,10 +62,10 @@ export const userFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -78,6 +80,6 @@ export const userFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 ];

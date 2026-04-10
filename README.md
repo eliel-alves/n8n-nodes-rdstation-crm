@@ -1,20 +1,20 @@
-# n8n-nodes-rdstation-crm-v1-v1
+# n8n-nodes-rdstation-crm-v1
 
-Community node for [n8n](https://n8n.io) that integrates **RD Station CRM** into your workflows via the **API v1** — using only an API token, sem necessidade de OAuth ou planos adicionais do RD Station Marketing.
+Node community para [n8n](https://n8n.io) que integra o **RD Station CRM** aos seus fluxos de trabalho via **API v1** — utilizando apenas um token de API, sem necessidade de OAuth ou planos adicionais do RD Station Marketing.
 
 > **Por que API v1?** A versão 2 da API usa OAuth2, que exige um plano do RD Station Marketing (produto separado do CRM). Esta integração usa a API v1, acessível a qualquer conta do RD Station CRM com um simples token de API.
 
 ---
 
-## Installation
+## Instalação
 
-### Via n8n UI (recommended)
+### Via interface do n8n (recomendado)
 
-1. Go to **Settings → Community Nodes**
-2. Click **Install**
-3. Enter `n8n-nodes-rdstation-crm-v1` and confirm
+1. Acesse **Configurações → Nodes da Comunidade**
+2. Clique em **Instalar**
+3. Digite `n8n-nodes-rdstation-crm-v1` e confirme
 
-### Via npm (self-hosted)
+### Via npm (instâncias self-hosted)
 
 ```bash
 cd ~/.n8n/custom
@@ -23,234 +23,244 @@ npm install n8n-nodes-rdstation-crm-v1
 
 ---
 
-## Credentials
+## Credenciais
 
-This node uses **API Token** authentication:
+Este node utiliza autenticação por **Token de API**:
 
-1. In RD Station CRM, go to **Configurações → Integrações → Token de API**
-2. Copy your API token
-3. In n8n, create a new **RD Station CRM API** credential
-4. Paste the token and save
+1. No RD Station CRM, acesse **Configurações → Integrações → Token de API**
+2. Copie o seu token de API
+3. No n8n, crie uma nova credencial **RD Station CRM API**
+4. Cole o token e salve
 
 ---
 
-## Resources & Operations
+## Recursos e Operações
 
 ### Deal (Negociação)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a new deal |
-| Get | Get a deal by ID |
-| Get Many | List deals (with filters and pagination) |
-| Update | Update a deal |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma nova negociação |
+| Get | Busca uma negociação pelo ID |
+| Get Many | Lista negociações (com filtros e paginação) |
+| Update | Atualiza uma negociação |
 
-**Filters:** name, win/loss status, stage, pipeline, campaign, source, owner, dates
+**Filtros disponíveis:** nome, status ganho/perdido, etapa, funil, campanha, fonte, responsável, datas
+
+**Campos extras:** vinculação a contato existente pelo ID
 
 ---
 
 ### Contact (Contato)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a new contact |
-| Get | Get a contact by ID |
-| Get Many | List contacts (with filters) |
-| Update | Update a contact |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria um novo contato |
+| Get | Busca um contato pelo ID |
+| Get Many | Lista contatos (com filtros) |
+| Update | Atualiza um contato |
 
-**Fields:** name, emails, phones (with type), job title, organization, birthday, social profiles (Facebook, LinkedIn, Twitter, Instagram, Skype)
+**Campos:** nome, e-mails, telefones (com tipo), cargo, empresa, data de nascimento, redes sociais (Facebook, LinkedIn, Twitter, Instagram, Skype)
 
 ---
 
 ### Organization (Empresa)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a new organization |
-| Get | Get an organization by ID |
-| Get Many | List organizations |
-| Update | Update an organization |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma nova empresa |
+| Get | Busca uma empresa pelo ID |
+| Get Many | Lista empresas |
+| Update | Atualiza uma empresa |
 
-**Fields:** name, website, address, city, state, country, phone, email, social profiles
+**Campos:** nome, site, endereço, cidade, estado, país, telefone, e-mail, redes sociais
 
 ---
 
 ### Task (Tarefa)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a new task |
-| Get | Get a task by ID |
-| Get Many | List tasks (with filters) |
-| Update | Update a task |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma nova tarefa |
+| Get | Busca uma tarefa pelo ID |
+| Get Many | Lista tarefas (com filtros) |
+| Update | Atualiza uma tarefa |
 
-**Types:** Call, Email, Meeting, Task, Lunch, Visit, WhatsApp
-**Filters:** type, completion status, owner, deal, contact, due date
+**Tipos:** Ligação, E-mail, Reunião, Tarefa, Almoço, Visita, WhatsApp
+**Filtros:** tipo, status de conclusão, responsável, negociação, contato, data de vencimento
 
 ---
 
 ### Product (Produto)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a new product |
-| Get | Get a product by ID |
-| Get Many | List products |
-| Update | Update a product |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria um novo produto |
+| Get | Busca um produto pelo ID |
+| Get Many | Lista produtos |
+| Update | Atualiza um produto |
 
 ---
 
-### Deal Product (Produto na Negociação)
-| Operation | Description |
-|-----------|-------------|
-| Create | Add a product to a deal |
-| Get Many | List all products in a deal |
-| Update | Update a product in a deal |
-| Delete | Remove a product from a deal |
+### Deal Product (Produto da Negociação)
+| Operação | Descrição |
+|----------|-----------|
+| Create | Adiciona um produto a uma negociação |
+| Get Many | Lista todos os produtos de uma negociação |
+| Update | Atualiza um produto na negociação |
+| Delete | Remove um produto da negociação |
 
 ---
 
 ### Activity (Anotação)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create an activity/note on a deal |
-| Get Many | List activities (filter by deal) |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma anotação em uma negociação |
+| Get Many | Lista anotações (filtro por negociação) |
 
 ---
 
 ### Custom Field (Campo Personalizado)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a custom field |
-| Get | Get a custom field by ID |
-| Get Many | List custom fields (filter by entity) |
-| Update | Update a custom field |
-| Delete | **Delete** a custom field |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria um campo personalizado |
+| Get | Busca um campo personalizado pelo ID |
+| Get Many | Lista campos personalizados (filtro por entidade) |
+| Update | Atualiza um campo personalizado |
+| Delete | **Exclui** um campo personalizado |
 
-**Entities:** Deal, Contact, Organization
-**Types:** Text, Number, Date, Select, Checkbox, URL
+**Entidades:** Deal, Contact, Organization
+**Tipos:** Texto, Número, Data, Seleção, Checkbox, URL
 
 ---
 
 ### Deal Pipeline (Funil de Vendas)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a pipeline |
-| Get | Get a pipeline by ID |
-| Get Many | List pipelines |
-| Update | Update a pipeline |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria um funil |
+| Get | Busca um funil pelo ID |
+| Get Many | Lista funis |
+| Update | Atualiza um funil |
 
 ---
 
 ### Deal Stage (Etapa do Funil)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a stage (requires pipeline) |
-| Get | Get a stage by ID |
-| Get Many | List stages (filter by pipeline) |
-| Update | Update a stage |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma etapa (requer funil) |
+| Get | Busca uma etapa pelo ID |
+| Get Many | Lista etapas (filtro por funil) |
+| Update | Atualiza uma etapa |
 
 ---
 
 ### Campaign (Campanha)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a campaign |
-| Get | Get a campaign by ID |
-| Get Many | List campaigns |
-| Update | Update a campaign |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma campanha |
+| Get | Busca uma campanha pelo ID |
+| Get Many | Lista campanhas |
+| Update | Atualiza uma campanha |
 
 ---
 
 ### Source (Fonte de Negociação)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a deal source |
-| Get | Get a source by ID |
-| Get Many | List sources |
-| Update | Update a source |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria uma fonte de negociação |
+| Get | Busca uma fonte pelo ID |
+| Get Many | Lista fontes |
+| Update | Atualiza uma fonte |
 
 ---
 
 ### Lost Reason (Motivo de Perda)
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a lost reason |
-| Get Many | List lost reasons |
+| Operação | Descrição |
+|----------|-----------|
+| Create | Cria um motivo de perda |
+| Get Many | Lista motivos de perda |
 
 ---
 
-### User (Usuário) — read-only
-| Operation | Description |
-|-----------|-------------|
-| Get | Get a user by ID |
-| Get Many | List all users |
+### User (Usuário) — somente leitura
+| Operação | Descrição |
+|----------|-----------|
+| Get | Busca um usuário pelo ID |
+| Get Many | Lista todos os usuários |
 
 ---
 
-### Team (Equipe) — read-only
-| Operation | Description |
-|-----------|-------------|
-| Get | Get a team by ID |
-| Get Many | List all teams |
+### Team (Equipe) — somente leitura
+| Operação | Descrição |
+|----------|-----------|
+| Get | Busca uma equipe pelo ID |
+| Get Many | Lista todas as equipes |
 
 ---
 
-## Usage Examples
+## Exemplos de Uso
 
-### Create a deal and add a product
-
-```
-1. RD Station CRM → Resource: Deal → Operation: Create
-   - Name: "Proposta Empresa ABC"
-   - Additional Fields: stage, pipeline, owner
-
-2. RD Station CRM → Resource: Deal Product → Operation: Create
-   - Deal ID: {{ $json.id }}  (from previous node)
-   - Product ID: "product-uuid"
-   - Amount: 5
-   - Price: 199.90
-```
-
-### Search contacts by email
+### Criar uma negociação e adicionar um produto
 
 ```
-1. RD Station CRM → Resource: Contact → Operation: Get Many
-   - Filters → Email: "cliente@empresa.com"
+1. RD Station CRM → Recurso: Deal → Operação: Create
+   - Nome: "Proposta Empresa ABC"
+   - Campos Adicionais: etapa, funil, responsável
+
+2. RD Station CRM → Recurso: Deal Product → Operação: Create
+   - ID da Negociação: {{ $json.id }}  (do nó anterior)
+   - ID do Produto: "uuid-do-produto"
+   - Quantidade: 5
+   - Preço: 199.90
 ```
 
-### Log an activity on a deal
+### Criar uma negociação vinculada a um contato existente
 
 ```
-1. RD Station CRM → Resource: Activity → Operation: Create
-   - Deal ID: "deal-uuid"
-   - Notes: "Reunião realizada, cliente interessado."
+1. RD Station CRM → Recurso: Deal → Operação: Create
+   - Nome: "Proposta Empresa ABC"
+   - Campos Adicionais → ID do Contato: "uuid-do-contato"
+```
+
+### Buscar contatos por e-mail
+
+```
+1. RD Station CRM → Recurso: Contact → Operação: Get Many
+   - Filtros → E-mail: "cliente@empresa.com"
+```
+
+### Registrar uma anotação em uma negociação
+
+```
+1. RD Station CRM → Recurso: Activity → Operação: Create
+   - ID da Negociação: "uuid-da-negociacao"
+   - Texto: "Reunião realizada, cliente interessado."
 ```
 
 ---
 
-## Compatibility
+## Compatibilidade
 
-- **n8n:** 1.0.0 or later
-- **Node.js:** 18.0.0 or later
+- **n8n:** 1.0.0 ou superior
+- **Node.js:** 18.0.0 ou superior
 - **RD Station CRM API:** v1
 
 ---
 
-## Resources
+## Recursos
 
-- [RD Station CRM API v1 Documentation](https://developers.rdstation.com/reference/crm-v1-introducao-e-requisitos)
+- [Documentação da API RD Station CRM v1](https://developers.rdstation.com/reference/crm-v1-introducao-e-requisitos)
 - [RD Station CRM](https://www.rdstation.com/crm/)
-- [n8n Documentation](https://docs.n8n.io)
-- [n8n Community Forum](https://community.n8n.io)
+- [Documentação do n8n](https://docs.n8n.io)
+- [Fórum da Comunidade n8n](https://community.n8n.io)
 
 ---
 
-## Contributing
+## Contribuindo
 
-Contributions are welcome! Feel free to open an issue or pull request on [GitHub](https://github.com/eliel-alves/n8n-nodes-rdstation-crm-v1).
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou pull request no [GitHub](https://github.com/eliel-alves/n8n-nodes-rdstation-crm).
 
 ---
 
-## License
+## Licença
 
 [MIT](LICENSE)
 
 ---
 
-*Built with ❤️ for the n8n community by [Eliel Alves](mailto:elielalves.dev@gmail.com)*
+*Desenvolvido com ❤️ para a comunidade n8n por [Eliel Alves](mailto:elielalves.dev@gmail.com)*

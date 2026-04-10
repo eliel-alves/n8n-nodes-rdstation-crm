@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const customFieldOperations: INodeProperties[] = [
 	{
-		displayName: 'Operation',
+		displayName: 'Operação',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
@@ -13,29 +13,34 @@ export const customFieldOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Create',
+				name: 'Criar',
 				value: 'create',
-				action: 'Create a custom field',
+				description: 'Cria um novo campo personalizado para negociações, contatos ou empresas',
+				action: 'Criar um campo personalizado',
 			},
 			{
-				name: 'Delete',
+				name: 'Excluir',
 				value: 'delete',
-				action: 'Delete a custom field',
+				description: 'Remove permanentemente um campo personalizado',
+				action: 'Excluir um campo personalizado',
 			},
 			{
-				name: 'Get',
+				name: 'Obter',
 				value: 'get',
-				action: 'Get a custom field',
+				description: 'Busca um campo personalizado pelo ID',
+				action: 'Obter um campo personalizado',
 			},
 			{
-				name: 'Get Many',
+				name: 'Obter Vários',
 				value: 'getAll',
-				action: 'Get many custom fields',
+				description: 'Lista campos personalizados com filtro por entidade',
+				action: 'Obter vários campos personalizados',
 			},
 			{
-				name: 'Update',
+				name: 'Atualizar',
 				value: 'update',
-				action: 'Update a custom field',
+				description: 'Atualiza rótulo, opções ou configurações de um campo personalizado',
+				action: 'Atualizar um campo personalizado',
 			},
 		],
 		default: 'getAll',
@@ -47,7 +52,7 @@ export const customFieldFields: INodeProperties[] = [
 	//         customField: delete / get / update
 	// ----------------------------------
 	{
-		displayName: 'Custom Field ID',
+		displayName: 'ID do Campo Personalizado',
 		name: 'id',
 		type: 'string',
 		required: true,
@@ -58,15 +63,15 @@ export const customFieldFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the custom field',
+		description: 'O ID do campo personalizado',
 	},
 
 	// ----------------------------------
 	//         customField: create
 	// ----------------------------------
 	{
-		displayName: 'Name',
-		name: 'name',
+		displayName: 'Rótulo',
+		name: 'label',
 		type: 'string',
 		required: true,
 		displayOptions: {
@@ -76,11 +81,11 @@ export const customFieldFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The label/name of the custom field',
+		description: 'Nome/rótulo exibido do campo',
 	},
 	{
-		displayName: 'Entity',
-		name: 'entity',
+		displayName: 'Entidade',
+		name: 'for',
 		type: 'options',
 		required: true,
 		displayOptions: {
@@ -91,24 +96,24 @@ export const customFieldFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Contact',
+				name: 'Contato',
 				value: 'contact',
 			},
 			{
-				name: 'Deal',
+				name: 'Negociação',
 				value: 'deal',
 			},
 			{
-				name: 'Organization',
+				name: 'Empresa',
 				value: 'organization',
 			},
 		],
 		default: 'deal',
-		description: 'The entity type the custom field belongs to',
+		description: 'Entidade à qual o campo personalizado pertence',
 	},
 	{
-		displayName: 'Field Type',
-		name: 'field_type',
+		displayName: 'Tipo do Campo',
+		name: 'type',
 		type: 'options',
 		required: true,
 		displayOptions: {
@@ -119,23 +124,23 @@ export const customFieldFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Checkbox',
+				name: 'Caixa de Seleção',
 				value: 'checkbox',
 			},
 			{
-				name: 'Date',
+				name: 'Data',
 				value: 'date',
 			},
 			{
-				name: 'Number',
+				name: 'Número',
 				value: 'number',
 			},
 			{
-				name: 'Select',
-				value: 'select',
+				name: 'Seleção',
+				value: 'option',
 			},
 			{
-				name: 'Text',
+				name: 'Texto',
 				value: 'text',
 			},
 			{
@@ -144,14 +149,14 @@ export const customFieldFields: INodeProperties[] = [
 			},
 		],
 		default: 'text',
-		description: 'The type of the custom field',
+		description: 'Tipo do campo personalizado',
 	},
 
 	// ----------------------------------
 	//         customField: getAll
 	// ----------------------------------
 	{
-		displayName: 'Return All',
+		displayName: 'Retornar Todos',
 		name: 'returnAll',
 		type: 'boolean',
 		displayOptions: {
@@ -161,10 +166,10 @@ export const customFieldFields: INodeProperties[] = [
 			},
 		},
 		default: false,
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'Se deve retornar todos os resultados ou apenas até um limite definido',
 	},
 	{
-		displayName: 'Limit',
+		displayName: 'Limite',
 		name: 'limit',
 		type: 'number',
 		displayOptions: {
@@ -179,17 +184,17 @@ export const customFieldFields: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		default: 50,
-		description: 'Max number of results to return',
+		description: 'Número máximo de resultados a retornar',
 	},
 
 	// ----------------------------------
-	//    customField: create / update — Additional Fields
+	//    customField: create / update — Campos Adicionais
 	// ----------------------------------
 	{
-		displayName: 'Additional Fields',
+		displayName: 'Campos Adicionais',
 		name: 'additionalFields',
 		type: 'collection',
-		placeholder: 'Add Field',
+		placeholder: 'Adicionar Campo',
 		default: {},
 		displayOptions: {
 			show: {
@@ -199,31 +204,58 @@ export const customFieldFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Name',
-				name: 'name',
+				displayName: 'Rótulo',
+				name: 'label',
 				type: 'string',
 				default: '',
-				description: 'New name/label for the custom field',
+				description: 'Novo rótulo para o campo personalizado',
 			},
 			{
-				displayName: 'Options',
-				name: 'options',
+				displayName: 'Opções',
+				name: 'opts',
 				type: 'string',
 				default: '',
-				// TODO: Verify if API expects comma-separated string or JSON array for this field
-				description: 'Comma-separated list of options for select-type fields (e.g. "Option A,Option B,Option C")',
+				description: 'Opções para campos do tipo Seleção. Separe com vírgulas (ex: Sim,Não,Talvez). Serão convertidas em array.',
+			},
+			{
+				displayName: 'Permitir Nova Opção',
+				name: 'allow_new',
+				type: 'boolean',
+				default: false,
+				description: 'Permitir ao usuário adicionar novas opções no campo de seleção',
+			},
+			{
+				displayName: 'Obrigatório',
+				name: 'required',
+				type: 'boolean',
+				default: false,
+				description: 'Se o preenchimento do campo é obrigatório',
+			},
+			{
+				displayName: 'Único',
+				name: 'unique',
+				type: 'boolean',
+				default: false,
+				description: 'Se o valor deve ser único entre os registros',
+			},
+			{
+				displayName: 'Ordem',
+				name: 'order',
+				type: 'number',
+				default: 0,
+				description: 'Posição de exibição do campo',
 			},
 		],
 	},
 
 	// ----------------------------------
-	//         customField: getAll — Filters
+	//         customField: getAll — Filtros
 	// ----------------------------------
 	{
-		displayName: 'Filters',
+		displayName: 'Filtros',
 		name: 'filters',
 		type: 'collection',
-		placeholder: 'Add Filter',
+		placeholder: 'Adicionar Filtro',
 		default: {},
 		displayOptions: {
 			show: {
@@ -233,25 +265,25 @@ export const customFieldFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Entity',
-				name: 'entity',
+				displayName: 'Entidade',
+				name: 'for',
 				type: 'options',
 				options: [
 					{
-						name: 'Contact',
+						name: 'Contato',
 						value: 'contact',
 					},
 					{
-						name: 'Deal',
+						name: 'Negociação',
 						value: 'deal',
 					},
 					{
-						name: 'Organization',
+						name: 'Empresa',
 						value: 'organization',
 					},
 				],
 				default: 'deal',
-				description: 'Filter custom fields by entity type',
+				description: 'Filtrar campos por entidade',
 			},
 		],
 	},
